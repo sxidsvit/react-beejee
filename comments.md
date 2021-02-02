@@ -35,3 +35,11 @@ import 'bootstrapp/dist/css/bootstrap.min.css'
 ---
 
 ### Подготавливаем данные для загрузки с сервера
+
+- создаём файл `constants.js` в котором будем хранить константы
+- создаём компонентн Loader (отображение процесса загрузки)
+- поскольку в компоненте `src\components\Loader\Loader.js` используется scss, то устанавливаем модуль node-sass
+
+```js
+npm install -D node-sass@4.14.1
+```
