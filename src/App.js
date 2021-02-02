@@ -1,38 +1,51 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Loader from './components/Loader/Loader';
+import MainTable from './components/MainTable/MainTable';
 import { getUrl } from './constants.js'
 
 function App() {
 
+  // Initialization
+  // const initialSortDirection = 'asc'
+  // const initialSortField = 'id'
+
   //  State
   const [loading, setLoading] = useState(false)
+  const [status, setStatus] = useState('')
+  const [tasks, setTasks] = useState([])
 
 
   //  Fetch initial data from server
-  // setLoading(true)
   const fetchData = async url => {
-    // setLoading(true)
     try {
       let res = await fetch(url)
       const fetchedData = await res.json()
-      const status = fetchedData.status
-      const tasks = fetchedData.message
+      const { status, message: { tasks } } = fetchedData
+      setStatus(status)
+      setTasks(tasks)
       setLoading(false)
-      console.log('status: ', status);
-      console.log('tasks: ', tasks);
-      // setLoading(false)
-      return { status, tasks }
       // setData(_.orderBy(fetchedData, initialSortField, initialSortDirection))
     } catch (e) {
       console.log(`${e.message}: cервер не возвращает нужные данные. Попробуйте позже ...`)
     }
   }
-  fetchData(getUrl)
+
+  useEffect(() => {
+    setLoading(true)
+    fetchData(getUrl)
+
+  }, [])
 
   return (
-    <div >
+    <div className="pt-5">
       {loading && <Loader />}
-      <h1 className="mt-5 ml-5">Привет</h1>
+      <MainTable
+        data={tasks}
+        sort='asc'
+        sortField='email'
+        onSort={() => { }}
+        onRowSelect={() => { }}
+      />
 
     </div>
   );

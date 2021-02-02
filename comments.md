@@ -32,14 +32,67 @@ import 'bootstrapp/dist/css/bootstrap.min.css'
 />
 ```
 
+В дальнейшем нам понадобиться иконочный шрифт от Material UI.
+Подключим его в файле `public\index.html`:
+
+```html
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/icon?family=Material+Icons"
+/>
+```
+
 ---
 
 ### Подготавливаем данные для загрузки с сервера
 
-- создаём файл `constants.js` в котором будем хранить константы
-- создаём компонентн Loader (отображение процесса загрузки)
-- поскольку в компоненте `src\components\Loader\Loader.js` используется scss, то устанавливаем модуль node-sass
+- создаём файл `constants.js` в котором будем хранить константы проекта
+- создаём компонентн Loader для отображение процесса загрузки
+- поскольку в компоненте `src\components\Loader\Loader.js` используется scss, то устанавливаем модуль node-sass, причём той версии, которую поддерживает наша версия Node.js
 
 ```js
 npm install -D node-sass@4.14.1
 ```
+
+- воспользуемя предоставленным нам [API](https://uxcandy.com/~shapoval/test-task-backend/docs/v2.html) и с помощью инструмента тестирования API [Postman](https://www.postman.com/) подготовим исходные данные для дальнейшей работы, а также протестируем запросы, которые понадобятся нам в дальнейшем
+
+### Получаем начальные данные от сервера
+
+Воспользуемся хуком `useEffect()` для загрузки данных:
+
+```js
+// src\App.js
+//  State
+const [loading, setLoading] = useState(false)
+const [status, setStatus] = useState('')
+const [tasks, setTasks] = useState([])
+
+//  Fetch initial data from server
+const fetchData = async (url) => {
+  try {
+    let res = await fetch(url)
+    const fetchedData = await res.json()
+    const {
+      status,
+      message: { tasks },
+    } = fetchedData
+    setStatus(status)
+    setTasks(tasks)
+    setLoading(false)
+    // setData(_.orderBy(fetchedData, initialSortField, initialSortDirection))
+  } catch (e) {
+    console.log(
+      `${e.message}: cервер не возвращает нужные данные. Попробуйте позже ...`
+    )
+  }
+}
+
+useEffect(() => {
+  setLoading(true)
+  fetchData(getUrl)
+}, [])
+```
+
+### Отображение данных, полученных от сервера
+
+Создаём компонент Table
