@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import _ from 'lodash'
 import Loader from './components/Loader/Loader';
 import MainTable from './components/MainTable/MainTable';
 import { getUrl } from './constants.js'
@@ -6,13 +7,15 @@ import { getUrl } from './constants.js'
 function App() {
 
   // Initialization
-  // const initialSortDirection = 'asc'
-  // const initialSortField = 'id'
+  const initialSortField = 'username'
+  const initialSortDirection = 'asc' // asc/desc
 
   //  State
   const [loading, setLoading] = useState(false)
   const [status, setStatus] = useState('')
   const [tasks, setTasks] = useState([])
+  const [sort, setSort] = useState(initialSortDirection)
+  const [sortField, setSortField] = useState(initialSortField)
 
 
   //  Fetch initial data from server
@@ -22,9 +25,8 @@ function App() {
       const fetchedData = await res.json()
       const { status, message: { tasks } } = fetchedData
       setStatus(status)
-      setTasks(tasks)
+      setTasks(_.orderBy(tasks, initialSortField, initialSortDirection))
       setLoading(false)
-      // setData(_.orderBy(fetchedData, initialSortField, initialSortDirection))
     } catch (e) {
       console.log(`${e.message}: cервер не возвращает нужные данные. Попробуйте позже ...`)
     }
@@ -36,19 +38,31 @@ function App() {
 
   }, [])
 
+  // Handlers 
+  const onSortHandler = (sortField) => {
+    // To avoid unnecessary requests to the server the cloneData variable has been created
+    const clonedTasks = tasks
+    const sortDirection = sort === 'asc' ? 'desc' : 'asc'
+    const orderedTasks = _.orderBy(clonedTasks, sortField, sortDirection)
+    console.log('orderedTasks: ', orderedTasks);
+
+    setTasks(orderedTasks)
+    setSort(sortDirection)
+    setSortField(sortField)
+  }
+
   return (
     <div className="pt-5">
       {loading && <Loader />}
       <MainTable
         data={tasks}
-        sort='asc'
-        sortField='email'
-        onSort={() => { }}
+        sort={sort}
+        sortField={sortField}
+        onSort={onSortHandler}
         onRowSelect={() => { }}
       />
-
     </div>
-  );
+  )
 }
 
 export default App;

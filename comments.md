@@ -95,4 +95,68 @@ useEffect(() => {
 
 ### Отображение данных, полученных от сервера
 
-Создаём компонент Table
+- На основе компонента [Table](https://react-bootstrap.github.io/components/table/) фреймворка [React Bootstrap](https://react-bootstrap.netlify.app/) cоздаём свой компонент Table.
+
+- Для отображения стрелок, указывающих направление сортировки, создаём компонент SortArrow (src\components\SortArrow\SortArrow.js)
+
+- Дополнительную стилизацию таблицы выполняем с помощью css-стилей, которые прописываем в файле src\index.css. Эти стили подключаются к файлу src\index.js и испорльзуются во всём приложении
+
+### Сортировка
+
+- Быстрее и проще всего выполнить сортировку можно воспользовавшись методом [orderBy](https://lodash.com/docs/4.17.15#orderBy) библиотеки [lodash](https://lodash.com/)
+
+- Устанавливаем lodash `npm i --save lodash`
+
+- Вносим изменения в функцию `fetchData`:
+
+```js
+  // Initialization
+  const initialSortField = 'username'
+  const initialSortDirection = 'desc' // desc - asc
+
+  //  Fetch initial data from server
+  const fetchData = async url => {
+    try {
+      ...
+      setTasks(_.orderBy(tasks, initialSortField, initialSortDirection))
+      ...
+    }
+```
+
+- Настраиваем сортировку
+
+```js
+//  src\App.js
+...
+//  State
+...
+  const [tasks, setTasks] = useState([])
+  const [sort, setSort] = useState(initialSortDirection)
+  const [sortField, setSortField] = useState(initialSortField)
+...
+// Handlers
+  const onSortHandler = (sortField) => {
+    // To avoid unnecessary requests to the server the cloneData variable has been created
+    const clonedTasks = tasks
+    const sortDirection = sort === 'asc' ? 'desc' : 'asc'
+    const orderedTasks = _.orderBy(clonedTasks, sortField, sortDirection)
+    console.log('orderedTasks: ', orderedTasks);
+
+    setTasks(orderedTasks)
+    setSort(sortDirection)
+    setSortField(sortField)
+  }
+...
+ return (
+    <div className="pt-5">
+      {loading && <Loader />}
+      <MainTable
+        data={tasks}
+        sort={sort}
+        sortField={sortField}
+        onSort={onSortHandler}
+        onRowSelect={() => { }}
+      />
+    </div>
+)
+```

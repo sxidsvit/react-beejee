@@ -3,11 +3,11 @@ import Table from 'react-bootstrap/Table'
 import { SortArrow } from '../SortArrow/SortArrow'
 
 const MainTable = ({ data, sort, sortField, onSort, onRowSelect }) => {
+  const keyGen = () => Date.now().toString().substr(8, 13)
 
   if (!data?.[0]) { return <></> }
 
   const fields = Object.keys(data[0]).filter(item => item !== 'id')
-  console.log('fields: ', fields);
 
   return (
     <Table striped bordered hover variant="dark" responsive="sm">
@@ -31,8 +31,8 @@ const MainTable = ({ data, sort, sortField, onSort, onRowSelect }) => {
       </thead>
       <tbody>
         {
-          data.map(item => (
-            <tr key={item[fields[0]] + item[fields[fields.length - 1]]} onClick={onRowSelect.bind(null, item)}>
+          data.map((item, index) => (
+            <tr key={keyGen} onClick={onRowSelect.bind(null, item)}>
               { fields.map(field => (<td key={field}>{item[field]}</td>))}
             </tr>
           ))
