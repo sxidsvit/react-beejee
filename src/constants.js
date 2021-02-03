@@ -3,4 +3,4 @@ const developer = 'sxidsvit'
 const admin = 'admin'
 const password = 123
 
-export const getUrl = `${baseUrl}?developer=${developer}`
+export const urlWithDeveloper = `${baseUrl}?developer=${developer}`

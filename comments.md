@@ -103,27 +103,7 @@ useEffect(() => {
 
 ### Сортировка
 
-- Быстрее и проще всего выполнить сортировку можно воспользовавшись методом [orderBy](https://lodash.com/docs/4.17.15#orderBy) библиотеки [lodash](https://lodash.com/)
-
-- Устанавливаем lodash `npm i --save lodash`
-
-- Вносим изменения в функцию `fetchData`:
-
-```js
-  // Initialization
-  const initialSortField = 'username'
-  const initialSortDirection = 'desc' // desc - asc
-
-  //  Fetch initial data from server
-  const fetchData = async url => {
-    try {
-      ...
-      setTasks(_.orderBy(tasks, initialSortField, initialSortDirection))
-      ...
-    }
-```
-
-- Настраиваем сортировку
+Настраиваем сортировку
 
 ```js
 //  src\App.js
@@ -131,20 +111,16 @@ useEffect(() => {
 //  State
 ...
   const [tasks, setTasks] = useState([])
-  const [sort, setSort] = useState(initialSortDirection)
   const [sortField, setSortField] = useState(initialSortField)
+  const [sort, setSort] = useState(initialSortDirection)
 ...
 // Handlers
   const onSortHandler = (sortField) => {
-    // To avoid unnecessary requests to the server the cloneData variable has been created
-    const clonedTasks = tasks
-    const sortDirection = sort === 'asc' ? 'desc' : 'asc'
-    const orderedTasks = _.orderBy(clonedTasks, sortField, sortDirection)
-    console.log('orderedTasks: ', orderedTasks);
-
-    setTasks(orderedTasks)
-    setSort(sortDirection)
     setSortField(sortField)
+    const sortDirection = sort === 'asc' ? 'desc' : 'asc'
+    setSort(sortDirection)
+    const params = `sort_field=${sortField}&sort_direction=${sortDirection}&page=1`
+    fetchData(`${urlWithDeveloper}&${params}`)
   }
 ...
  return (
@@ -160,3 +136,5 @@ useEffect(() => {
     </div>
 )
 ```
+
+### Пагинация

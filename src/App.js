@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import _ from 'lodash'
 import Loader from './components/Loader/Loader';
 import MainTable from './components/MainTable/MainTable';
-import { getUrl } from './constants.js'
+import { urlWithDeveloper } from './constants.js'
 
 function App() {
 
@@ -20,12 +20,14 @@ function App() {
 
   //  Fetch initial data from server
   const fetchData = async url => {
+    // console.log('fetchData - url: ', url);
     try {
       let res = await fetch(url)
       const fetchedData = await res.json()
-      const { status, message: { tasks } } = fetchedData
+      const { status, message: { tasks, total_task_count } } = fetchedData
+      // console.log('total_task_count: ', total_task_count);
       setStatus(status)
-      setTasks(_.orderBy(tasks, initialSortField, initialSortDirection))
+      setTasks(tasks)
       setLoading(false)
     } catch (e) {
       console.log(`${e.message}: cервер не возвращает нужные данные. Попробуйте позже ...`)
@@ -34,21 +36,17 @@ function App() {
 
   useEffect(() => {
     setLoading(true)
-    fetchData(getUrl)
+    fetchData(`${urlWithDeveloper}`)
 
   }, [])
 
   // Handlers 
   const onSortHandler = (sortField) => {
-    // To avoid unnecessary requests to the server the cloneData variable has been created
-    const clonedTasks = tasks
-    const sortDirection = sort === 'asc' ? 'desc' : 'asc'
-    const orderedTasks = _.orderBy(clonedTasks, sortField, sortDirection)
-    console.log('orderedTasks: ', orderedTasks);
-
-    setTasks(orderedTasks)
-    setSort(sortDirection)
     setSortField(sortField)
+    const sortDirection = sort === 'asc' ? 'desc' : 'asc'
+    setSort(sortDirection)
+    const params = `sort_field=${sortField}&sort_direction=${sortDirection}&page=1`
+    fetchData(`${urlWithDeveloper}&${params}`)
   }
 
   return (
