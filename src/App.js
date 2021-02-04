@@ -23,7 +23,6 @@ function App() {
     const url = params
       ? `${urlWithDeveloper}&${params}`
       : `${urlWithDeveloper}`
-    console.log('fetchData - url: ', url);
     try {
       let res = await fetch(url)
       const fetchedData = await res.json()
@@ -44,12 +43,12 @@ function App() {
 
   // Handlers 
   const onSortHandler = (sortField, page) => {
-    console.log('onSortHandler - page: ', page);
     setSortField(sortField)
     const sortDirection = sort === 'asc' ? 'desc' : 'asc'
     setSort(sortDirection)
     const params = `sort_field=${sortField}&sort_direction=${sortDirection}&page=${page}`
-    fetchData(`${urlWithDeveloper}&${params}`)
+    const url = `${urlWithDeveloper}&${params}`
+    fetchData(url)
   }
 
   return (

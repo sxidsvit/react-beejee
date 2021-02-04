@@ -5,15 +5,13 @@ import { SortArrow } from '../SortArrow/SortArrow'
 
 const MainTable = ({ data, sort, sortField, totalTasks, dataPerPage, currentPage = 1, onSort, fetchData, onRowSelect }) => {
 
-  // const [currentPage, setCurrentPage] = useState(0)
-
   const keyGen = () => Date.now().toString().substr(8, 13)
 
   if (!data?.[0]) { return <></> }
 
   const fields = Object.keys(data[0]).filter(item => item !== 'id')
 
-  const pageCount = totalTasks % dataPerPage ? totalTasks / dataPerPage + 1 : totalTasks / dataPerPage
+  const pageCount = totalTasks % dataPerPage ? Math.floor(totalTasks / dataPerPage) + 1 : totalTasks / dataPerPage
 
   const onPageChangeHandler = ({ selected }) => {
     const page = selected + 1
@@ -56,6 +54,7 @@ const MainTable = ({ data, sort, sortField, totalTasks, dataPerPage, currentPage
       {
         totalTasks > dataPerPage
           ? <ReactPaginate
+            key={sort}
             pageCount={pageCount}
             pageRangeDisplayed={4}
             marginPagesDisplayed={2}
@@ -71,7 +70,7 @@ const MainTable = ({ data, sort, sortField, totalTasks, dataPerPage, currentPage
             previousLinkClassName="page-link"
             nextLinkClassName="page-link"
             onPageChange={onPageChangeHandler}
-            forcePage={currentPage} // To go to the first pagination button after the search
+            forcePage={currentPage - 1}
           /> : null
       }
     </div>
