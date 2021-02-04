@@ -138,3 +138,36 @@ useEffect(() => {
 ```
 
 ### Пагинация
+
+- Устанавливаем модуль [react-paginate](https://www.npmjs.com/package/react-paginate) для рендеринга пагинации:
+
+`npm install react-paginate --save`
+
+По [ссылке](https://github.com/AdeleD/react-paginate/blob/master/demo/js/demo.js) можно ознакомиться с демо-примером как пользоваться этим модулем
+
+- создаем обработчик события клика по кнопке с номером страницы в пагинации:
+
+```js
+//  src\components\MainTable\MainTable.js
+const onPageChangeHandler = ({ selected }) => {
+  const page = selected + 1
+  const params = `sort_field=${sortField}&sort_direction=${sort}&page=${page}`
+  fetchData(params)
+}
+```
+
+- выполняем рефакторинг функции fetchData чтобы устранить повторный ввод базовой части url
+
+```js
+//  src\App.js
+import { urlWithDeveloper} from './constants.js'
+...
+ const fetchData = async (params = '') => {
+    const url = params
+      ? `${urlWithDeveloper}&${params}`
+      : `${urlWithDeveloper}`
+...
+  }
+```
+
+- стилизуем кнопки пагинации в файле глобальный стилей `src\index.css`

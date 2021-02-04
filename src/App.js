@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
-import _ from 'lodash'
 import Loader from './components/Loader/Loader';
 import MainTable from './components/MainTable/MainTable';
-import { urlWithDeveloper } from './constants.js'
+import { urlWithDeveloper, dataPerPage } from './constants.js'
 
 function App() {
 
@@ -16,16 +15,20 @@ function App() {
   const [tasks, setTasks] = useState([])
   const [sort, setSort] = useState(initialSortDirection)
   const [sortField, setSortField] = useState(initialSortField)
+  const [totalTasks, setTotalTasks] = useState(0)
 
 
   //  Fetch initial data from server
-  const fetchData = async url => {
-    // console.log('fetchData - url: ', url);
+  const fetchData = async (params = '') => {
+    const url = params
+      ? `${urlWithDeveloper}&${params}`
+      : `${urlWithDeveloper}`
+    console.log('fetchData - url: ', url);
     try {
       let res = await fetch(url)
       const fetchedData = await res.json()
       const { status, message: { tasks, total_task_count } } = fetchedData
-      // console.log('total_task_count: ', total_task_count);
+      setTotalTasks(total_task_count)
       setStatus(status)
       setTasks(tasks)
       setLoading(false)
@@ -36,16 +39,16 @@ function App() {
 
   useEffect(() => {
     setLoading(true)
-    fetchData(`${urlWithDeveloper}`)
-
+    fetchData()
   }, [])
 
   // Handlers 
-  const onSortHandler = (sortField) => {
+  const onSortHandler = (sortField, page) => {
+    console.log('onSortHandler - page: ', page);
     setSortField(sortField)
     const sortDirection = sort === 'asc' ? 'desc' : 'asc'
     setSort(sortDirection)
-    const params = `sort_field=${sortField}&sort_direction=${sortDirection}&page=1`
+    const params = `sort_field=${sortField}&sort_direction=${sortDirection}&page=${page}`
     fetchData(`${urlWithDeveloper}&${params}`)
   }
 
@@ -56,7 +59,10 @@ function App() {
         data={tasks}
         sort={sort}
         sortField={sortField}
+        totalTasks={totalTasks}
+        dataPerPage={dataPerPage}
         onSort={onSortHandler}
+        fetchData={fetchData}
         onRowSelect={() => { }}
       />
     </div>

@@ -22,3 +22,43 @@ code {
 tbody tr {
   cursor: pointer;
 }
+
+.pagination {
+  justify-content: center;
+  color: #000;
+  margin: 2rem 0;
+}
+
+.pagination li {
+  margin: 0 0.5rem;
+}
+
+.pagination .page-link {
+  color: #000;
+  outline: none;
+}
+
+.page-item.active .page-link {
+  z-index: 3;
+  color: #fff;
+  background-color: #343a40;
+  border-color: #343a40;
+}
+
+.page-link:focus,
+.form-control:focus,
+.btn-outline-secondary:focus {
+  box-shadow: 0 0 0 0.15rem rgba(118, 117, 117, 0.15);
+  border-color: #343a40;
+}
+
+.page-link:hover,
+.btn-outline-secondary:hover {
+  background-color: #6c757d;
+  border-color: #6c757d;
+  color: #fff;
+}
+
+.pagination li a {
+  outline-style: none;
+}
