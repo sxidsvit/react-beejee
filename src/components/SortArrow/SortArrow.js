@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const SortArrow = (props) => {
+const SortArrow = (props) => {
 
   const sortDirection = props.sortDirection === 'asc' ? `arrow_drop_down` : `arrow_drop_up`
   const defaultSortDeraction = `arrow_drop_down`
@@ -22,3 +22,5 @@ export const SortArrow = (props) => {
     </>
   )
 }
+
+export default SortArrow

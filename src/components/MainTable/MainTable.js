@@ -1,18 +1,31 @@
 import React from 'react'
-import Table from 'react-bootstrap/Table'
 import ReactPaginate from 'react-paginate'
-import { SortArrow } from '../SortArrow/SortArrow'
+import Table from 'react-bootstrap/Table'
+import SortArrow from '../SortArrow/SortArrow'
+import { keyGen } from '../../utils'
 
-const MainTable = ({ data, sort, sortField, totalTasks, dataPerPage, currentPage = 1, onSort, fetchData, onRowSelect }) => {
+const MainTable = ({
+  data,
+  sort,
+  sortField,
+  totalTasks,
+  dataPerPage,
+  currentPage = 1,
+  onSort,
+  fetchData,
+  onRowSelect
+}) => {
 
-  const keyGen = () => Date.now().toString().substr(8, 13)
-
+  //  Data checking to render
   if (!data?.[0]) { return <></> }
 
+  //  Array with names of table columns  
   const fields = Object.keys(data[0]).filter(item => item !== 'id')
 
+  //  Number of pages in pagination
   const pageCount = totalTasks % dataPerPage ? Math.floor(totalTasks / dataPerPage) + 1 : totalTasks / dataPerPage
 
+  //  Handler for clicking on the selected pagination page
   const onPageChangeHandler = ({ selected }) => {
     const page = selected + 1
     const params = `sort_field=${sortField}&sort_direction=${sort}&page=${page}`
@@ -70,7 +83,6 @@ const MainTable = ({ data, sort, sortField, totalTasks, dataPerPage, currentPage
             previousLinkClassName="page-link"
             nextLinkClassName="page-link"
             onPageChange={onPageChangeHandler}
-            forcePage={currentPage - 1}
           /> : null
       }
     </div>
