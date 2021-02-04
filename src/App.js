@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
 import Loader from './components/Loader/Loader';
-import MainTable from './components/MainTable/MainTable';
-import { urlWithDeveloper, dataPerPage } from './constants.js'
+import MainTable from './components/MainTable/MainTable'
+import ModeSelector from './components/ModeSelector/ModeSelector'
+import FormNewData from './components/FormNewData/FormNewData'
+import { baseUrl, developer, dataPerPage } from './constants.js'
 
 function App() {
 
@@ -16,13 +18,16 @@ function App() {
   const [sort, setSort] = useState(initialSortDirection)
   const [sortField, setSortField] = useState(initialSortField)
   const [totalTasks, setTotalTasks] = useState(0)
+  const [mode, setMode] = useState('')
 
 
   //  Fetch initial data from server
   const fetchData = async (params = '') => {
+    console.log('fetchData - params: ', params);
     const url = params
-      ? `${urlWithDeveloper}&${params}`
-      : `${urlWithDeveloper}`
+      ? `${baseUrl}?${params}`
+      : `${baseUrl}`
+    console.log('fetchData - url: ', url);
     try {
       let res = await fetch(url)
       const fetchedData = await res.json()
@@ -38,22 +43,34 @@ function App() {
 
   useEffect(() => {
     setLoading(true)
-    fetchData()
+    const params = `developer=${developer}`
+    fetchData(params)
   }, [])
 
   // Handlers 
+  const onModeSelectHandler = (mode) => () => {
+    console.log('onModeSelectHandler - mode: ', mode);
+    setMode(mode)
+  }
+
+  //  Sorting by the selected field & fetching data for a specified page
   const onSortHandler = (sortField, page) => {
     setSortField(sortField)
     const sortDirection = sort === 'asc' ? 'desc' : 'asc'
     setSort(sortDirection)
-    const params = `sort_field=${sortField}&sort_direction=${sortDirection}&page=${page}`
-    const url = `${urlWithDeveloper}&${params}`
+    const params = `developer=${developer}&sort_field=${sortField}&sort_direction=${sortDirection}&page=${page}`
+    const url = `${params}`
     fetchData(url)
   }
 
   return (
     <div className="pt-5">
       {loading && <Loader />}
+      <ModeSelector onSelect={onModeSelectHandler} />
+      {
+        mode === 'newTask' &&
+        <FormNewData data={totalTasks} setData={setTasks} fetchData={fetchData} />
+      }
       <MainTable
         data={tasks}
         sort={sort}
