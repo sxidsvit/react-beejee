@@ -12,13 +12,16 @@ function App() {
   const initialSortDirection = 'asc' // asc/desc
 
   //  State
-  const [loading, setLoading] = useState(false)
+
+  const [totalTasks, setTotalTasks] = useState(0)
   const [status, setStatus] = useState('')
   const [tasks, setTasks] = useState([])
+  const [loading, setLoading] = useState(false)
+
+  const [mode, setMode] = useState('')
   const [sort, setSort] = useState(initialSortDirection)
   const [sortField, setSortField] = useState(initialSortField)
-  const [totalTasks, setTotalTasks] = useState(0)
-  const [mode, setMode] = useState('')
+
 
 
   //  Fetch initial data from server
