@@ -3,7 +3,6 @@ import ReactPaginate from 'react-paginate'
 import Table from 'react-bootstrap/Table'
 import SortArrow from '../SortArrow/SortArrow'
 import { keyGen } from '../../utils'
-import { developer } from '../../constants.js'
 
 const MainTable = ({
   data,
@@ -29,7 +28,7 @@ const MainTable = ({
   //  Handler for clicking on the selected pagination page
   const onPageChangeHandler = ({ selected }) => {
     const page = selected + 1
-    const params = `developer=${developer}&sort_field=${sortField}&sort_direction=${sort}&page=${page}`
+    const params = `sort_field=${sortField}&sort_direction=${sort}&page=${page}`
     console.log('onPageChangeHandler - params: ', params);
     fetchData(params)
   }

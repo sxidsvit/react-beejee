@@ -120,7 +120,7 @@ useEffect(() => {
     const sortDirection = sort === 'asc' ? 'desc' : 'asc'
     setSort(sortDirection)
     const params = `sort_field=${sortField}&sort_direction=${sortDirection}&page=1`
-    fetchData(`${urlWithDeveloper}&${params}`)
+    fetchData(`${getUrl}&${params}`)
   }
 ...
  return (
@@ -160,12 +160,12 @@ const onPageChangeHandler = ({ selected }) => {
 
 ```js
 //  src\App.js
-import { urlWithDeveloper} from './constants.js'
+import { getUrl} from './constants.js'
 ...
  const fetchData = async (params = '') => {
     const url = params
-      ? `${urlWithDeveloper}&${params}`
-      : `${urlWithDeveloper}`
+      ? `${getUrl}&${params}`
+      : `${getUrl}`
 ...
   }
 ```

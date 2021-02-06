@@ -4,9 +4,9 @@ import * as yup from 'yup'
 import { Formik } from 'formik';
 import Button from 'react-bootstrap/Button'
 import { Col } from 'react-bootstrap'
-// import { developer } from '../../constants'
+import useFetch from '../../useFetch'
 
-const TableNewData = ({ data, setData }) => {
+const TableNewData = () => {
 
   const [openForm, setOpenForm] = useState(true)
 
@@ -15,21 +15,19 @@ const TableNewData = ({ data, setData }) => {
   //   setOpenForm(true)
   // }
 
+  const { createData } = useFetch()
+
   const onAddDataHandler = (values, isValidating, errors, touched) => {
     isValidating.validateForm()
 
-    const newRecord = {
-      username: values.username,
-      email: values.email,
-      status: values.status,
-      text: values.text
-    }
-    console.log('newRecord: ', newRecord);
+    const formData = new FormData()
+    formData.append("username", values.username)
+    formData.append("email", values.email)
+    formData.append("text", values.text)
 
-    setData([newRecord, ...data])
-    // const page = selected + 1
-    // const params = `sort_field=${sortField}&sort_direction=${sort}&page=${page}`
-    // fetchData(params)
+
+
+    createData(formData)
 
     setOpenForm(false)
     isValidating.resetForm()

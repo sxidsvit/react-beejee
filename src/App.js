@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import Loader from './components/Loader/Loader';
 import MainTable from './components/MainTable/MainTable'
 import ModeSelector from './components/ModeSelector/ModeSelector'
-// import FormNewData from './components/FormNewData/FormNewData'
-import { developer, dataPerPage } from './constants.js'
-// import Context from './context'
+import FormNewData from './components/FormNewData/FormNewData'
+import { dataPerPage } from './constants.js'
 import useFetch from './useFetch'
 
 function App() {
@@ -14,10 +13,6 @@ function App() {
   const initialSortDirection = 'asc' // asc/desc
 
   //  State
-
-  // const [totalTasks, setTotalTasks] = useState(0)
-  // const [status, setStatus] = useState('')
-  // const [tasks, setTasks] = useState([])
   const [loading, setLoading] = useState(false)
 
   const [mode, setMode] = useState('')
@@ -25,14 +20,10 @@ function App() {
   const [sortField, setSortField] = useState(initialSortField)
 
   const { fetchData, tasks, totalTasks } = useFetch()
-  console.log('App- totalTasks: ', totalTasks);
-  console.log('App- tasks: ', tasks);
-  console.log('App- fetchData: ', fetchData);
 
   useEffect(() => {
     setLoading(true)
-    const params = `developer=${developer}`
-    fetchData(params)
+    fetchData()
     setLoading(false)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -48,7 +39,7 @@ function App() {
     setSortField(sortField)
     const sortDirection = sort === 'asc' ? 'desc' : 'asc'
     setSort(sortDirection)
-    const params = `developer=${developer}&sort_field=${sortField}&sort_direction=${sortDirection}&page=${page}`
+    const params = `sort_field=${sortField}&sort_direction=${sortDirection}&page=${page}`
     const url = `${params}`
     fetchData(url)
   }
@@ -58,8 +49,7 @@ function App() {
       {loading && <Loader />}
       <ModeSelector onSelect={onModeSelectHandler} />
       {
-        mode === 'newTask' &&
-        {/* <FormNewData data={totalTasks} setData={setTasks} fetchData={fetchData} /> */ }
+        mode === 'newTask' && <FormNewData />
       }
       <MainTable
         data={tasks}

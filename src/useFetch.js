@@ -1,16 +1,17 @@
+/* eslint-disable space-before-function-paren */
 import { useState } from 'react'
-import { urlWithDeveloper } from './constants.js'
+import { getUrl, createUrl } from './constants.js'
 
 function useFetch() {
   const [status, setStatus] = useState('')
   const [totalTasks, setTotalTasks] = useState(0)
   const [tasks, setTasks] = useState([])
 
-  //  Fetch data from server
+  //  Fetch data from server DB
   const fetchData = async (params = '') => {
     const url = params
-      ? `${urlWithDeveloper}&${params}`
-      : `${urlWithDeveloper}`
+      ? `${getUrl}&${params}`
+      : `${getUrl}`
     console.log('fetchData - url: ', url);
     try {
       let res = await fetch(url)
@@ -23,8 +24,36 @@ function useFetch() {
       console.log(`${e.message}: cервер не возвращает нужные данные. Попробуйте позже ...`)
     }
   }
+
+  //  Create data on server DB
+  const createData = async (formData) => {
+    console.log('createData: ', formData.get("username"))
+    console.log('createData: ', formData.get("email"))
+    console.log('createData: ', formData.get("text"))
+    const url = `${createUrl}`
+    try {
+      let res = await fetch(url, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Content-Type': 'multipart/form-data',
+        },
+        body: formData
+      })
+      const fetchedData = await res.json()
+      const { status, message } = fetchedData
+      setStatus(status)
+      setTasks(message)
+    } catch (e) {
+      console.log(`${e.message}`)
+    }
+  }
+
+
   return {
     fetchData,
+    createData,
     status,
     totalTasks,
     tasks,
