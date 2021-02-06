@@ -4,7 +4,7 @@ import * as yup from 'yup'
 import { Formik } from 'formik';
 import Button from 'react-bootstrap/Button'
 import { Col } from 'react-bootstrap'
-import { developer } from '../../constants'
+// import { developer } from '../../constants'
 
 const TableNewData = ({ data, setData }) => {
 

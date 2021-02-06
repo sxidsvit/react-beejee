@@ -2,8 +2,10 @@ import { useState, useEffect } from 'react';
 import Loader from './components/Loader/Loader';
 import MainTable from './components/MainTable/MainTable'
 import ModeSelector from './components/ModeSelector/ModeSelector'
-import FormNewData from './components/FormNewData/FormNewData'
-import { baseUrl, developer, dataPerPage } from './constants.js'
+// import FormNewData from './components/FormNewData/FormNewData'
+import { developer, dataPerPage } from './constants.js'
+// import Context from './context'
+import useFetch from './useFetch'
 
 function App() {
 
@@ -13,41 +15,26 @@ function App() {
 
   //  State
 
-  const [totalTasks, setTotalTasks] = useState(0)
-  const [status, setStatus] = useState('')
-  const [tasks, setTasks] = useState([])
+  // const [totalTasks, setTotalTasks] = useState(0)
+  // const [status, setStatus] = useState('')
+  // const [tasks, setTasks] = useState([])
   const [loading, setLoading] = useState(false)
 
   const [mode, setMode] = useState('')
   const [sort, setSort] = useState(initialSortDirection)
   const [sortField, setSortField] = useState(initialSortField)
 
-
-
-  //  Fetch initial data from server
-  const fetchData = async (params = '') => {
-    console.log('fetchData - params: ', params);
-    const url = params
-      ? `${baseUrl}?${params}`
-      : `${baseUrl}`
-    console.log('fetchData - url: ', url);
-    try {
-      let res = await fetch(url)
-      const fetchedData = await res.json()
-      const { status, message: { tasks, total_task_count } } = fetchedData
-      setTotalTasks(total_task_count)
-      setStatus(status)
-      setTasks(tasks)
-      setLoading(false)
-    } catch (e) {
-      console.log(`${e.message}: cервер не возвращает нужные данные. Попробуйте позже ...`)
-    }
-  }
+  const { fetchData, tasks, totalTasks } = useFetch()
+  console.log('App- totalTasks: ', totalTasks);
+  console.log('App- tasks: ', tasks);
+  console.log('App- fetchData: ', fetchData);
 
   useEffect(() => {
     setLoading(true)
     const params = `developer=${developer}`
     fetchData(params)
+    setLoading(false)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // Handlers 
@@ -72,7 +59,7 @@ function App() {
       <ModeSelector onSelect={onModeSelectHandler} />
       {
         mode === 'newTask' &&
-        <FormNewData data={totalTasks} setData={setTasks} fetchData={fetchData} />
+        {/* <FormNewData data={totalTasks} setData={setTasks} fetchData={fetchData} /> */ }
       }
       <MainTable
         data={tasks}

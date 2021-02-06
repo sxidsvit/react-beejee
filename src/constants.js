@@ -1,5 +1,5 @@
-const admin = 'admin'
-const password = 123
+// const admin = 'admin'
+// const password = 123
 export const developer = 'sxidsvit'
 export const dataPerPage = 3
 
