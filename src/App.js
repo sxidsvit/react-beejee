@@ -3,6 +3,7 @@ import Loader from './components/Loader/Loader';
 import MainTable from './components/MainTable/MainTable'
 import ModeSelector from './components/ModeSelector/ModeSelector'
 import FormNewData from './components/FormNewData/FormNewData'
+import FormLogin from './components/FormLogin/FormLogin'
 import { dataPerPage } from './constants.js'
 import useFetch from './useFetch'
 
@@ -50,7 +51,9 @@ function App() {
       {loading && <Loader />}
       <ModeSelector onSelect={onModeSelectHandler} />
       {
-        mode === 'newTask' && <FormNewData setMode={setMode} />
+        mode === 'newTask' && <FormNewData setMode={setMode} />}
+      {
+        mode === 'adminLogin' && <FormLogin setMode={setMode} />
       }
       <MainTable
         data={tasks}
