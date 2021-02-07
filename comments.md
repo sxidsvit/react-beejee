@@ -187,3 +187,19 @@ import { getUrl} from './constants.js'
 ```
 
 Применение библиотеки может быть не таким очевидным и простым.
+
+### Create: Особенности реализации
+
+- В [API](https://uxcandy.com/~shapoval/test-task-backend/docs/v2.html) не указано, что при добавлении задачи POST-запрос должен быть отправлен по протоколу https. Чтобы реализовать это при работе с локальным сервером (localhost) нужно работать через cors-прокси, например через https://cors-anywhere.herokuapp.com/
+
+```js
+// src\constants.js
+...
+const developer = 'sxidsvit'
+const cors = 'https://cors-anywhere.herokuapp.com/'
+export const baseUrl = 'https://uxcandy.com/~shapoval/test-task-backend/v2/'
+export const createUrl = `${cors}${baseUrl}create?developer=${developer}`
+...
+```
+
+- есть проблемы с реализацией POST-запроса с помощью браузероного метода fetch() при работе с React. Поэтому для этиз запросов использовалcz клиент [AXIOS](https://www.npmjs.com/package/axios#browser-support)

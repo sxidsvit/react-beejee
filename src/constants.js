@@ -6,6 +6,6 @@ export const dataPerPage = 3
 
 export const baseUrl = 'https://uxcandy.com/~shapoval/test-task-backend/v2/'
 
-export const getUrl = `${cors}${baseUrl}?developer=${developer}`
+export const getUrl = `${baseUrl}?developer=${developer}`
 
 export const createUrl = `${cors}${baseUrl}create?developer=${developer}`

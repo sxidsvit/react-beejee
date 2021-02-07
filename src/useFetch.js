@@ -1,5 +1,6 @@
 /* eslint-disable space-before-function-paren */
 import { useState } from 'react'
+import axios from 'axios'
 import { getUrl, createUrl } from './constants.js'
 
 function useFetch() {
@@ -27,21 +28,20 @@ function useFetch() {
 
   //  Create data on server DB
   const createData = async (formData) => {
-    console.log('createData: ', formData.get("username"))
-    console.log('createData: ', formData.get("email"))
-    console.log('createData: ', formData.get("text"))
     const url = `${createUrl}`
     try {
-      let res = await fetch(url, {
-        method: 'POST',
-        mode: 'cors',
+      let res = await axios({
+        url: url,
+        method: 'post',
+        data: formData,
         headers: {
           'Cache-Control': 'no-cache',
           'Content-Type': 'multipart/form-data',
+          'Accept': '*/*'
         },
-        body: formData
+        responseType: 'json',
       })
-      const fetchedData = await res.json()
+      const fetchedData = await res.data
       const { status, message } = fetchedData
       setStatus(status)
       setTasks(message)
@@ -49,7 +49,6 @@ function useFetch() {
       console.log(`${e.message}`)
     }
   }
-
 
   return {
     fetchData,
