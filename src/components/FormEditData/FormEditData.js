@@ -9,6 +9,12 @@ import useFetch from '../../useFetch'
 const TableNewData = ({ setMode }) => {
 
   const [openForm, setOpenForm] = useState(true)
+
+  // Form's fields handlers 
+  // const onOpenFormHandler = () => {
+  //   setOpenForm(true)
+  // }
+
   const { createData } = useFetch()
 
   const onAddDataHandler = (values, isValidating, errors, touched) => {
@@ -21,7 +27,7 @@ const TableNewData = ({ setMode }) => {
     // Sending data to the server DB
     createData(formData)
     setTimeout(() => {
-      alert('Task has been added')
+      alert('Task has been edited')
       //  Hide the form
       setMode('')
       setOpenForm(false)
@@ -35,16 +41,20 @@ const TableNewData = ({ setMode }) => {
     setOpenForm(false)
   }
 
+
+
   // Schema for validating form data
   const schema = yup.object({
     username: yup.string().min(2, 'Minimum 2 characters').max(60, 'Maximum 60 characters').required('Required'),
     email: yup.string().email('Invalid email').required('Required'),
     text: yup.string().required('Required'),
+    // status: yup.string().required('Required')
   })
   // Initializing Form Fields
   const initialValues = {
     username: '',
     email: '',
+    // status: '0',
     text: ''
   }
 
@@ -114,12 +124,28 @@ const TableNewData = ({ setMode }) => {
                   <Form.Control.Feedback type="invalid">{errors.text}</Form.Control.Feedback>
                 </Form.Group>
 
+
+                {/* <Form.Row>
+                  <Form.Group as={Col} controlId="formGroupstatus">
+                    <Form.Label>status</Form.Label>
+                    <Form.Control type="text" name="status" value={values.status}
+                      onChange={handleChange}
+                      onBlur={handleBlur}
+                      isValid={touched.status && !errors.status}
+                      isInvalid={touched.status && errors.status}
+                      placeholder="Enter status"
+                    />
+                    <Form.Control.Feedback type="valid">Looks good!</Form.Control.Feedback>
+                    <Form.Control.Feedback type="invalid">{errors.status}</Form.Control.Feedback>
+                  </Form.Group>
+                </Form.Row> */}
+
                 <Form.Group className="text-center">
                   <Button type="submit"
                     className="btn btn-success mt-2 mb-5"
                     disabled={!dirty || !isValid || isSubmitting}
                   >
-                    Add new record</Button>
+                    Login</Button>
                   <Button
                     className="btn btn-danger ml-5 mt-2 mb-5"
                     onClick={onCloseHandler}
@@ -129,9 +155,12 @@ const TableNewData = ({ setMode }) => {
               </Form>
             </React.Fragment>
           }
-        </div>
-      )}
-    </Formik>
+
+        </div >
+
+      )
+      }
+    </Formik >
   )
 }
 

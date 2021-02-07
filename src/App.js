@@ -14,7 +14,6 @@ function App() {
 
   //  State
   const [loading, setLoading] = useState(false)
-
   const [mode, setMode] = useState('')
   const [sort, setSort] = useState(initialSortDirection)
   const [sortField, setSortField] = useState(initialSortField)
@@ -29,12 +28,8 @@ function App() {
   }, [])
 
   // Handlers 
-  const onModeSelectHandler = (mode) => () => {
-    console.log('onModeSelectHandler - mode: ', mode);
-    setMode(mode)
-  }
 
-  //  Sorting by the selected field & fetching data for a specified page
+  // - Sorting by the selected field & fetching data for a specified page
   const onSortHandler = (sortField, page) => {
     setSortField(sortField)
     const sortDirection = sort === 'asc' ? 'desc' : 'asc'
@@ -44,12 +39,18 @@ function App() {
     fetchData(url)
   }
 
+  // - Create new task or login as admin
+  const onModeSelectHandler = (mode) => () => {
+    console.log('onModeSelectHandler - mode: ', mode);
+    setMode(mode)
+  }
+
   return (
     <div className="pt-5">
       {loading && <Loader />}
       <ModeSelector onSelect={onModeSelectHandler} />
       {
-        mode === 'newTask' && <FormNewData />
+        mode === 'newTask' && <FormNewData setMode={setMode} />
       }
       <MainTable
         data={tasks}
