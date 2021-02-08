@@ -1,16 +1,16 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import Form from 'react-bootstrap/Form'
 import * as yup from 'yup'
 import { Formik } from 'formik';
 import Button from 'react-bootstrap/Button'
 import { Col } from 'react-bootstrap'
-import useFetch from '../../useFetch'
+import { ApiContext } from '../../context/Api/ApiContext'
 import { admin, password } from '../../constants'
 
 const FormLogin = ({ setMode }) => {
 
   const [openForm, setOpenForm] = useState(true)
-  const { loginAsAdmin } = useFetch()
+  const { loginAsAdmin } = useContext(ApiContext)
 
   const onAddDataHandler = (values, isValidating, errors, touched) => {
     isValidating.validateForm()
@@ -20,6 +20,7 @@ const FormLogin = ({ setMode }) => {
     formData.append("password", values.password)
     // Sending data to the server DB
     loginAsAdmin(formData)
+    // Close login form
     setMode('')
     setOpenForm(false)
     // Clearing form fields

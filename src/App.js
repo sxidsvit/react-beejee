@@ -1,11 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import Loader from './components/Loader/Loader';
 import MainTable from './components/MainTable/MainTable'
 import ModeSelector from './components/ModeSelector/ModeSelector'
-import FormNewData from './components/FormNewData/FormNewData'
-import FormLogin from './components/FormLogin/FormLogin'
 import { dataPerPage } from './constants.js'
-import useFetch from './useFetch'
+import { ApiContext } from './context/Api/ApiContext'
 
 function App() {
 
@@ -15,11 +13,10 @@ function App() {
 
   //  State
   const [loading, setLoading] = useState(false)
-  const [mode, setMode] = useState('')
   const [sort, setSort] = useState(initialSortDirection)
   const [sortField, setSortField] = useState(initialSortField)
 
-  const { fetchData, tasks, totalTasks } = useFetch()
+  const { fetchData, tasks, totalTasks } = useContext(ApiContext)
 
   useEffect(() => {
     setLoading(true)
@@ -41,20 +38,15 @@ function App() {
   }
 
   // - Create new task or login as admin
-  const onModeSelectHandler = (mode) => () => {
-    console.log('onModeSelectHandler - mode: ', mode);
-    setMode(mode)
-  }
+  // const onModeSelectHandler = (mode) => () => {
+  //   console.log('onModeSelectHandler - mode: ', mode);
+  //   setMode(mode)
+  // }
 
   return (
     <div className="pt-5">
       {loading && <Loader />}
-      <ModeSelector onSelect={onModeSelectHandler} />
-      {
-        mode === 'newTask' && <FormNewData setMode={setMode} />}
-      {
-        mode === 'adminLogin' && <FormLogin setMode={setMode} />
-      }
+      <ModeSelector />
       <MainTable
         data={tasks}
         sort={sort}

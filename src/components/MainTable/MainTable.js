@@ -70,7 +70,7 @@ const MainTable = ({
           ? <ReactPaginate
             key={sort}
             pageCount={pageCount}
-            pageRangeDisplayed={4}
+            pageRangeDisplayed={2}
             marginPagesDisplayed={2}
             previousLabel={'<'}
             nextLabel={'>'}

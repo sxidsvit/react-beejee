@@ -1,9 +1,10 @@
 /* eslint-disable space-before-function-paren */
 import { useState } from 'react'
 import axios from 'axios'
-import { getUrl, createUrl, loginUrl } from './constants.js'
+import { getUrl, createUrl, loginUrl } from '../../constants.js'
+import { ApiContext } from './ApiContext'
 
-function useFetch() {
+export const ApiData = ({ children }) => {
   const [status, setStatus] = useState('')
   const [totalTasks, setTotalTasks] = useState(0)
   const [tasks, setTasks] = useState([])
@@ -71,21 +72,18 @@ function useFetch() {
       setStatus(status)
       // setTasks(message)
       setToken(token)
-      console.log('token: ', token)
-      localStorage.setItem('token', token)
+      console.log('loginAsAdmin - token: ', token)
     } catch (e) {
       console.log(`${e.message}`)
     }
   }
 
-  return {
-    fetchData,
-    createData,
-    loginAsAdmin,
-    status,
-    totalTasks,
-    tasks,
-  }
+  return (
+    <ApiContext.Provider value={{
+      fetchData, createData, loginAsAdmin,
+      status, totalTasks, tasks, token
+    }}>
+      { children}
+    </ApiContext.Provider>
+  )
 }
-
-export default useFetch
