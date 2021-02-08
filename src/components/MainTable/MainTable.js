@@ -2,8 +2,11 @@ import React, { useContext } from 'react'
 import ReactPaginate from 'react-paginate'
 import Table from 'react-bootstrap/Table'
 import SortArrow from '../SortArrow/SortArrow'
-import { keyGen } from '../../utils'
+import { keyGen, getTextFromCode } from '../../utils'
 import { ApiContext } from '../../context/Api/ApiContext'
+
+const result = getTextFromCode('10')
+console.log('result: ', result);
 
 const MainTable = ({
   data,
@@ -27,6 +30,7 @@ const MainTable = ({
 
   //  Array with names of table columns  
   const fields = Object.keys(data[0]).filter(item => item !== 'id')
+  console.log('data: ', data[0]['status']);
 
   //  Number of pages in pagination
   const pageCount = totalTasks % dataPerPage ? Math.floor(totalTasks / dataPerPage) + 1 : totalTasks / dataPerPage
@@ -66,9 +70,10 @@ const MainTable = ({
                 <tr key={index + keyGen} onClick={onEditSelect.bind(null, item)}>
                   { fields.map(field => (
                     <td
-                      key={field}>
-                      {item[field]}
-                    </td>))}
+                      key={field} >
+                      { field === 'status' ? getTextFromCode(item[field]) : item[field]}
+                    </td>)
+                  )}
                   {token &&
                     <td>
                       <button className="btn btn-success ml-3 mr-3 pt-1 pb-1 ">

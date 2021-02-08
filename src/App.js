@@ -43,7 +43,10 @@ function App() {
   const onEditSelectHandler = (item) => {
     console.log('App - item: ', item);
     // console.log('App - token: ', token);
-    setEditTask(true)
+    setEditTask(false)
+    setTimeout(() => {
+      setEditTask(true)
+    }, 300);
     setCurrentItem(item)
 
   }
