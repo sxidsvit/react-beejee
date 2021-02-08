@@ -68,7 +68,7 @@ const TableNewData = ({ setMode }) => {
           {
             openForm &&
             <React.Fragment>
-              <h4 className="mb-5" style={{ color: 'red' }}  > Attension!!! All form fields must be completed</h4>
+              <h4 className="mb-2" style={{ color: 'red' }}  > Attension!!! All form fields must be completed</h4>
               <Form noValidate onSubmit={onAddDataHandler}>
                 <Form.Row>
                   <Form.Group as={Col} controlId="formGroupusername">

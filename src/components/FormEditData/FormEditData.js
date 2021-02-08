@@ -4,6 +4,7 @@ import * as yup from 'yup'
 import { Formik } from 'formik';
 import Button from 'react-bootstrap/Button'
 import { ApiContext } from '../../context/Api/ApiContext'
+import OptionsList from '../OptionsList/OptionsList'
 // import useFetch from '../../useFetch'
 
 
@@ -13,19 +14,20 @@ const FormEditData = ({ currentItem: { id, text, status }, setEditTask }) => {
   console.log('FormEditData - status: ', status);
 
   // const [openForm, setOpenForm] = useState(true)
-  const { token } = useContext(ApiContext)
+  const { token, editTask } = useContext(ApiContext)
 
   // const { createData } = useFetch()
 
   const onAddDataHandler = (values, isValidating, errors, touched) => {
-    console.log('onAddDataHandler  - values: ', values);
     isValidating.validateForm()
     // Packaging form data into a formData object
     const formData = new FormData()
     formData.append("text", values.text)
-    formData.append("status", values.select)
+    formData.append("status", Number(values.status))
+    formData.append("token", token)
+
     // Sending data to the server DB
-    // createData(formData)
+    editTask(formData, id)
     isValidating.resetForm()
     setEditTask(false)
   }
@@ -37,13 +39,12 @@ const FormEditData = ({ currentItem: { id, text, status }, setEditTask }) => {
   }
 
   // Schema for validating form data
-  const schema = yup.object({
+  const schema = yup.object().shape({
     text: yup.string().min(2, 'Minimum 2 characters').max(50, 'Maximum 50 characters').required('Required'),
-    // status: yup.string().required('Required')
+    status: yup.string().oneOf(['0', '1', '10', '11'], 'Invalid Status').required('Status required')
   })
   // Initializing Form Fields
   const initialValues = {
-    // status: '0',
     text: `${text}`
   }
 
@@ -66,7 +67,7 @@ const FormEditData = ({ currentItem: { id, text, status }, setEditTask }) => {
         isSubmitting
       }) => (
         < div className="d-flex flex-column justify-content-center align-items-center pb-3">
-          <h4 className="mb-5" style={{ color: 'red' }}>Edit task</h4>
+          <h4 className="mb-2" style={{ color: 'red' }}>Edit task</h4>
           <Form noValidate onSubmit={onAddDataHandler}>
             <Form.Row>
               <Form.Label>Text to edit</Form.Label>
@@ -84,12 +85,14 @@ const FormEditData = ({ currentItem: { id, text, status }, setEditTask }) => {
 
             <Form.Group controlId="exampleForm.SelectCustom">
               <Form.Label>Task' status</Form.Label>
-              <Form.Control as="select" custom name="select">
-                <option value="0">не выполнена</option>
-                <option value="1">не выполнена, отредактирована админом</option>
-                <option selected value="10">выполнена</option>
-                <option value="11">выполнена, отредактирована админом</option>
+              <Form.Control as="select" custom name="status"
+                onChange={handleChange}
+                onBlur={handleBlur}>
+                <option className="text-danger" selected value='null'>select status</option>
+                <OptionsList />
               </Form.Control>
+              <Form.Control.Feedback type="valid">Looks good!</Form.Control.Feedback>
+              <Form.Control.Feedback type="invalid">{errors.text}</Form.Control.Feedback>
             </Form.Group>
 
 

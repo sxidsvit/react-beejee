@@ -59,7 +59,7 @@ const FormLogin = ({ setMode }) => {
         isSubmitting
       }) => (
         < div className="d-flex flex-column justify-content-center align-items-center pb-3">
-          <h4 className="mb-5" style={{ color: 'red' }}  > Login as ADMIN</h4>
+          <h4 className="mb-2" style={{ color: 'red' }}  > Login as ADMIN</h4>
           <Form noValidate onSubmit={onAddDataHandler}>
             <Form.Row>
               <Form.Group as={Col} controlId="formGroupusername">

@@ -62,3 +62,7 @@ tbody tr button {
 .pagination li a {
   outline-style: none;
 }
+
+.form-group label {
+  margin-top: 1rem;
+}

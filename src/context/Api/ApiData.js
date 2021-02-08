@@ -1,7 +1,7 @@
 /* eslint-disable space-before-function-paren */
 import { useState } from 'react'
 import axios from 'axios'
-import { getUrl, createUrl, loginUrl } from '../../constants.js'
+import { getUrl, createUrl, loginUrl, editUrl, developer } from '../../constants.js'
 import { ApiContext } from './ApiContext'
 
 export const ApiData = ({ children }) => {
@@ -77,9 +77,35 @@ export const ApiData = ({ children }) => {
     }
   }
 
+  //  Edit task
+  const editTask = async (formData, id) => {
+
+    const url = `${editUrl}${id}?developer=${developer}`
+    console.log('editTask - url: ', url);
+    try {
+      let res = await axios({
+        url: url,
+        method: 'post',
+        data: formData,
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Content-Type': 'multipart/form-data',
+          'Accept': '*/*'
+        },
+        responseType: 'json',
+      })
+      const fetchedData = await res.data
+      const { status } = fetchedData
+      console.log('editTask - status: ', status);
+      setStatus(status)
+    } catch (e) {
+      console.log(`${e.message}`)
+    }
+  }
+
   return (
     <ApiContext.Provider value={{
-      fetchData, createData, loginAsAdmin,
+      fetchData, createData, loginAsAdmin, editTask,
       status, totalTasks, tasks, token
     }}>
       { children}
