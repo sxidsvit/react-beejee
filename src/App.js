@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import Loader from './components/Loader/Loader';
 import MainTable from './components/MainTable/MainTable'
 import ModeSelector from './components/ModeSelector/ModeSelector'
+import FormEditData from './components/FormEditData/FormEditData'
 import { dataPerPage } from './constants.js'
 import { ApiContext } from './context/Api/ApiContext'
 
@@ -15,8 +16,10 @@ function App() {
   const [loading, setLoading] = useState(false)
   const [sort, setSort] = useState(initialSortDirection)
   const [sortField, setSortField] = useState(initialSortField)
+  const [editTask, setEditTask] = useState(false)
+  const [currentItem, setCurrentItem] = useState({})
 
-  const { fetchData, tasks, totalTasks } = useContext(ApiContext)
+  const { fetchData, tasks, totalTasks, token } = useContext(ApiContext)
 
   useEffect(() => {
     setLoading(true)
@@ -37,16 +40,20 @@ function App() {
     fetchData(url)
   }
 
-  // - Create new task or login as admin
-  // const onModeSelectHandler = (mode) => () => {
-  //   console.log('onModeSelectHandler - mode: ', mode);
-  //   setMode(mode)
-  // }
+  const onEditSelectHandler = (item) => {
+    console.log('App - item: ', item);
+    // console.log('App - token: ', token);
+    setEditTask(true)
+    setCurrentItem(item)
+
+  }
 
   return (
     <div className="pt-5">
       {loading && <Loader />}
       <ModeSelector />
+      {(editTask && token)
+        && <FormEditData currentItem={currentItem} setEditTask={setEditTask} />}
       <MainTable
         data={tasks}
         sort={sort}
@@ -55,7 +62,7 @@ function App() {
         dataPerPage={dataPerPage}
         onSort={onSortHandler}
         fetchData={fetchData}
-        onRowSelect={() => { }}
+        onEditSelect={onEditSelectHandler}
       />
     </div>
   )

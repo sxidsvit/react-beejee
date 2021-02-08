@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import ReactPaginate from 'react-paginate'
 import Table from 'react-bootstrap/Table'
 import SortArrow from '../SortArrow/SortArrow'
 import { keyGen } from '../../utils'
+import { ApiContext } from '../../context/Api/ApiContext'
 
 const MainTable = ({
   data,
@@ -13,11 +14,16 @@ const MainTable = ({
   currentPage = 1,
   onSort,
   fetchData,
-  onRowSelect
+  onEditSelect
 }) => {
+
+  //  get amin token
+  const { token } = useContext(ApiContext)
 
   //  Data checking to render
   if (!data?.[0]) { return <></> }
+
+
 
   //  Array with names of table columns  
   const fields = Object.keys(data[0]).filter(item => item !== 'id')
@@ -57,16 +63,18 @@ const MainTable = ({
           <tbody>
             {
               data.map((item, index) => (
-                <tr key={index + keyGen} onClick={onRowSelect.bind(null, item)}>
+                <tr key={index + keyGen} onClick={onEditSelect.bind(null, item)}>
                   { fields.map(field => (
                     <td
                       key={field}>
                       {item[field]}
                     </td>))}
-                  <td>
-                    <button className="btn btn-success ml-3 mr-3 pt-1 pb-1 ">
-                      Edit</button>
-                  </td>
+                  {token &&
+                    <td>
+                      <button className="btn btn-success ml-3 mr-3 pt-1 pb-1 ">
+                        Edit</button>
+                    </td>
+                  }
                 </tr>
               ))
             }

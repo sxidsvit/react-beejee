@@ -6,7 +6,6 @@ const ModeSelector = () => {
   const [mode, setMode] = useState('')
 
   const onModeSelectHandler = (mode) => () => {
-    console.log('onModeSelectHandler - mode: ', mode);
     setMode(mode)
   }
   return (

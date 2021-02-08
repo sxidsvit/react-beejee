@@ -72,7 +72,6 @@ export const ApiData = ({ children }) => {
       setStatus(status)
       // setTasks(message)
       setToken(token)
-      console.log('loginAsAdmin - token: ', token)
     } catch (e) {
       console.log(`${e.message}`)
     }

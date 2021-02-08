@@ -19,7 +19,7 @@ code {
   align-items: center;
 }
 
-tbody tr {
+tbody tr button {
   cursor: pointer;
 }
 
