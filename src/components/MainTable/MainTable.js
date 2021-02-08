@@ -58,7 +58,15 @@ const MainTable = ({
             {
               data.map((item, index) => (
                 <tr key={index + keyGen} onClick={onRowSelect.bind(null, item)}>
-                  { fields.map(field => (<td key={field}>{item[field]}</td>))}
+                  { fields.map(field => (
+                    <td
+                      key={field}>
+                      {item[field]}
+                    </td>))}
+                  <td>
+                    <button className="btn btn-success ml-3 mr-3 pt-1 pb-1 ">
+                      Edit</button>
+                  </td>
                 </tr>
               ))
             }
