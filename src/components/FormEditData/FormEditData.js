@@ -9,10 +9,6 @@ import OptionsList from '../OptionsList/OptionsList'
 
 
 const FormEditData = ({ currentItem: { id, text, status }, setEditTask }) => {
-  console.log('FormEditData - id: ', id);
-  console.log('FormEditData - text: ', text);
-  console.log('FormEditData - status: ', status);
-
   // const [openForm, setOpenForm] = useState(true)
   const { token, editTask } = useContext(ApiContext)
 

@@ -19,7 +19,7 @@ function App() {
   const [editTask, setEditTask] = useState(false)
   const [currentItem, setCurrentItem] = useState({})
 
-  const { fetchData, tasks, totalTasks, token } = useContext(ApiContext)
+  const { fetchData, token } = useContext(ApiContext)
 
   useEffect(() => {
     setLoading(true)
@@ -40,15 +40,13 @@ function App() {
     fetchData(url)
   }
 
+  // Task selecting for editing
   const onEditSelectHandler = (item) => {
-    console.log('App - item: ', item);
-    // console.log('App - token: ', token);
     setEditTask(false)
     setTimeout(() => {
       setEditTask(true)
     }, 300);
     setCurrentItem(item)
-
   }
 
   return (
@@ -58,13 +56,10 @@ function App() {
       {(editTask && token)
         && <FormEditData currentItem={currentItem} setEditTask={setEditTask} />}
       <MainTable
-        data={tasks}
         sort={sort}
         sortField={sortField}
-        totalTasks={totalTasks}
         dataPerPage={dataPerPage}
         onSort={onSortHandler}
-        fetchData={fetchData}
         onEditSelect={onEditSelectHandler}
       />
     </div>

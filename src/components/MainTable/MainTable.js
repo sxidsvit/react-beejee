@@ -5,27 +5,20 @@ import SortArrow from '../SortArrow/SortArrow'
 import { keyGen, getTextFromCode } from '../../utils'
 import { ApiContext } from '../../context/Api/ApiContext'
 
-const result = getTextFromCode('10')
-
 const MainTable = ({
-  data,
   sort,
   sortField,
-  totalTasks,
   dataPerPage,
   currentPage = 1,
   onSort,
-  fetchData,
   onEditSelect
 }) => {
 
   //  get amin token
-  const { token } = useContext(ApiContext)
+  const { fetchData, tasks: data, token, totalTasks } = useContext(ApiContext)
 
   //  Data checking to render
   if (!data?.[0]) { return <></> }
-
-
 
   //  Array with names of table columns  
   const fields = Object.keys(data[0]).filter(item => item !== 'id')
@@ -37,7 +30,6 @@ const MainTable = ({
   const onPageChangeHandler = ({ selected }) => {
     const page = selected + 1
     const params = `sort_field=${sortField}&sort_direction=${sort}&page=${page}`
-    console.log('onPageChangeHandler - params: ', params);
     fetchData(params)
   }
 

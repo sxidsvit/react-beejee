@@ -94,7 +94,6 @@ export const ApiData = ({ children }) => {
       })
       const fetchedData = await res.data
       const { status } = fetchedData
-      console.log('editTask - status: ', status);
       setStatus(status)
     } catch (e) {
       console.log(`${e.message}`)
