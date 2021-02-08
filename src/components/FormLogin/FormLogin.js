@@ -91,12 +91,12 @@ const FormLogin = ({ setMode }) => {
 
             <Form.Group className="text-center">
               <Button type="submit"
-                className="btn btn-success mt-2 mb-5"
+                className="btn btn-success"
                 disabled={!dirty || !isValid || isSubmitting}
               >
                 Login</Button>
               <Button
-                className="btn btn-danger ml-5 mt-2 mb-5"
+                className="btn btn-danger"
                 onClick={onCloseHandler}
               >
                 Close form</Button>

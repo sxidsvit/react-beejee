@@ -6,7 +6,6 @@ import { keyGen, getTextFromCode } from '../../utils'
 import { ApiContext } from '../../context/Api/ApiContext'
 
 const result = getTextFromCode('10')
-console.log('result: ', result);
 
 const MainTable = ({
   data,
@@ -30,7 +29,6 @@ const MainTable = ({
 
   //  Array with names of table columns  
   const fields = Object.keys(data[0]).filter(item => item !== 'id')
-  console.log('data: ', data[0]['status']);
 
   //  Number of pages in pagination
   const pageCount = totalTasks % dataPerPage ? Math.floor(totalTasks / dataPerPage) + 1 : totalTasks / dataPerPage

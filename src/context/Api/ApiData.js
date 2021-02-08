@@ -54,7 +54,6 @@ export const ApiData = ({ children }) => {
   //  Login as admin
   const loginAsAdmin = async (formData) => {
     const url = `${loginUrl}`
-    console.log('loginAsAdmin - url: ', url);
     try {
       let res = await axios({
         url: url,
@@ -81,7 +80,6 @@ export const ApiData = ({ children }) => {
   const editTask = async (formData, id) => {
 
     const url = `${editUrl}${id}?developer=${developer}`
-    console.log('editTask - url: ', url);
     try {
       let res = await axios({
         url: url,
@@ -106,7 +104,7 @@ export const ApiData = ({ children }) => {
   return (
     <ApiContext.Provider value={{
       fetchData, createData, loginAsAdmin, editTask,
-      status, totalTasks, tasks, token
+      status, totalTasks, tasks, token, setToken
     }}>
       { children}
     </ApiContext.Provider>

@@ -52,7 +52,7 @@ function App() {
   }
 
   return (
-    <div className="pt-5">
+    <div className="pt-1">
       {loading && <Loader />}
       <ModeSelector />
       {(editTask && token)
