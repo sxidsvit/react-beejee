@@ -8,8 +8,11 @@ export const ApiData = ({ children }) => {
   const [status, setStatus] = useState(null)
   const [totalTasks, setTotalTasks] = useState(0)
   const [tasks, setTasks] = useState([])
-  const [token, setToken] = useState('')
   const [message, setMessage] = useState('')
+  const [token, setToken] = useState(null)
+
+  // Remove the old token when initialize application
+  // localStorage.removeItem('token')
 
   //  Fetch data from server DB
   const fetchData = async (params = '') => {
@@ -46,9 +49,8 @@ export const ApiData = ({ children }) => {
         responseType: 'json',
       })
       const fetchedData = await res.data
-      const { status, message } = fetchedData
+      const { status } = fetchedData
       setStatus(status)
-      setTasks(message)
     } catch (e) {
       console.log(`${e.message}`)
     }
@@ -71,9 +73,10 @@ export const ApiData = ({ children }) => {
         responseType: 'json',
       })
       const fetchedData = await res.data
-      const { status, message: { token } } = fetchedData
+      const { status, message: { token: serverToken } } = fetchedData
       setStatus(status)
-      setToken(token)
+      localStorage.setItem('token', serverToken)
+      setToken(serverToken)
     } catch (e) {
       console.log(`${e.message}`)
     }
@@ -109,6 +112,7 @@ export const ApiData = ({ children }) => {
     <ApiContext.Provider value={{
       fetchData, createData, loginAsAdmin, editTask,
       status, totalTasks, tasks, token, setToken, message
+      // status, totalTasks, tasks, message
     }}>
       { children}
     </ApiContext.Provider>

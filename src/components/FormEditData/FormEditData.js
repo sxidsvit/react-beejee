@@ -8,15 +8,15 @@ import { ApiContext } from '../../context/Api/ApiContext'
 import { AlertContext } from '../../context/Alert/AlertContext'
 import { editTaskSuccessText, editTaskErrorText } from '../../constants'
 import { statusMessage } from '../../utils'
-// import useFetch from '../../useFetch'
 
 
 const FormEditData = ({ currentItem: { id, text, status }, setEditTask }) => {
-  // const [openForm, setOpenForm] = useState(true)
-  const { token, editTask, status: mainStatus } = useContext(ApiContext)
+  const { editTask, status: mainStatus } = useContext(ApiContext)
   const { show } = useContext(AlertContext)
 
-  // const { createData } = useFetch()
+  // Get admin' token from localStorage
+  const token = localStorage.getItem('token')
+  console.log('FormEditData - token: ', token)
 
   const onAddDataHandler = (values, isValidating, errors, touched) => {
     isValidating.validateForm()

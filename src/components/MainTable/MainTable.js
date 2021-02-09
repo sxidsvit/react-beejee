@@ -14,8 +14,10 @@ const MainTable = ({
   onEditSelect
 }) => {
 
-  //  get amin token
-  const { fetchData, tasks: data, token, totalTasks } = useContext(ApiContext)
+  const { fetchData, tasks: data, totalTasks } = useContext(ApiContext)
+
+  // Get admin' token from localStorage
+  const token = localStorage.getItem('token')
 
   //  Data checking to render
   if (!data?.[0]) { return <></> }
