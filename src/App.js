@@ -1,10 +1,11 @@
 import { useState, useEffect, useContext } from 'react';
+import { ApiContext } from './context/Api/ApiContext'
 import Loader from './components/Loader/Loader';
 import MainTable from './components/MainTable/MainTable'
 import ModeSelector from './components/ModeSelector/ModeSelector'
 import FormEditData from './components/FormEditData/FormEditData'
+import Alert from './components/Alert/Alert'
 import { dataPerPage } from './constants.js'
-import { ApiContext } from './context/Api/ApiContext'
 
 function App() {
 
@@ -55,6 +56,7 @@ function App() {
       <ModeSelector />
       {(editTask && token)
         && <FormEditData currentItem={currentItem} setEditTask={setEditTask} />}
+      <Alert />
       <MainTable
         sort={sort}
         sortField={sortField}

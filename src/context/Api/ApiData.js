@@ -9,6 +9,7 @@ export const ApiData = ({ children }) => {
   const [totalTasks, setTotalTasks] = useState(0)
   const [tasks, setTasks] = useState([])
   const [token, setToken] = useState('')
+  const [message, setMessage] = useState('')
 
   //  Fetch data from server DB
   const fetchData = async (params = '') => {
@@ -69,7 +70,6 @@ export const ApiData = ({ children }) => {
       const fetchedData = await res.data
       const { status, message: { token } } = fetchedData
       setStatus(status)
-      // setTasks(message)
       setToken(token)
     } catch (e) {
       console.log(`${e.message}`)
@@ -93,8 +93,9 @@ export const ApiData = ({ children }) => {
         responseType: 'json',
       })
       const fetchedData = await res.data
-      const { status } = fetchedData
+      const { status, message = '' } = fetchedData
       setStatus(status)
+      setMessage(message)
     } catch (e) {
       console.log(`${e.message}`)
     }
@@ -103,7 +104,7 @@ export const ApiData = ({ children }) => {
   return (
     <ApiContext.Provider value={{
       fetchData, createData, loginAsAdmin, editTask,
-      status, totalTasks, tasks, token, setToken
+      status, totalTasks, tasks, token, setToken, message
     }}>
       { children}
     </ApiContext.Provider>
