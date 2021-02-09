@@ -17,6 +17,7 @@ const MainTable = ({
   //  get amin token
   const { fetchData, tasks: data, token, totalTasks } = useContext(ApiContext)
 
+  console.log('MainTable - data: ', data);
   //  Data checking to render
   if (!data?.[0]) { return <></> }
 

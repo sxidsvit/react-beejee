@@ -9,6 +9,7 @@ const ModeSelector = () => {
 
   const onModeSelectHandler = (mode) => () => {
     setMode(mode)
+    // Trigering Login/Logout
     if (mode === 'adminLogin' && token) {
       setToken('')
       setMode('')

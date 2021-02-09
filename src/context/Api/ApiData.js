@@ -46,9 +46,8 @@ export const ApiData = ({ children }) => {
         responseType: 'json',
       })
       const fetchedData = await res.data
-      const { status, message } = fetchedData
+      const { status } = fetchedData
       setStatus(status)
-      setTasks(message)
     } catch (e) {
       console.log(`${e.message}`)
     }
