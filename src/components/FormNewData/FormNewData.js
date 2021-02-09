@@ -5,12 +5,15 @@ import { Formik } from 'formik';
 import Button from 'react-bootstrap/Button'
 import { Col } from 'react-bootstrap'
 import { ApiContext } from '../../context/Api/ApiContext'
+import { AlertContext } from '../../context/Alert/AlertContext'
+import { newTaskSuccessText, newTaskErrorText } from '../../constants'
+import { statusMessage } from '../../utils'
 
 const TableNewData = ({ setMode }) => {
 
   const [openForm, setOpenForm] = useState(true)
-  const { createData, token } = useContext(ApiContext)
-  console.log('FormNewData- token: ', token);
+  const { createData, status } = useContext(ApiContext)
+  const { show } = useContext(AlertContext)
 
   const onAddDataHandler = (values, isValidating, errors, touched) => {
     isValidating.validateForm()
@@ -23,9 +26,12 @@ const TableNewData = ({ setMode }) => {
     createData(formData)
     //  Hide the form
     setMode('')
-    setOpenForm(false)
     // Clearing form fields
     isValidating.resetForm()
+    // Alert message
+    setTimeout(() => {
+      statusMessage(show, status, newTaskSuccessText, newTaskErrorText)
+    }, 500);
   }
 
   const onCloseHandler = () => {
@@ -68,7 +74,7 @@ const TableNewData = ({ setMode }) => {
           {
             openForm &&
             <React.Fragment>
-              <h4 className="mb-2" style={{ color: 'red' }}  > Attension!!! All form fields must be completed</h4>
+              <h4 className="mb-2" style={{ color: 'red' }}  >Create new Task</h4>
               <Form noValidate onSubmit={onAddDataHandler}>
                 <Form.Row>
                   <Form.Group as={Col} controlId="formGroupusername">
@@ -117,7 +123,7 @@ const TableNewData = ({ setMode }) => {
                     className="btn btn-success mt-2 mb-5"
                     disabled={!dirty || !isValid || isSubmitting}
                   >
-                    Add new record</Button>
+                    Add new task</Button>
                   <Button
                     className="btn btn-danger ml-5 mt-2 mb-5"
                     onClick={onCloseHandler}

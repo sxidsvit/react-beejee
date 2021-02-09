@@ -3,14 +3,18 @@ import Form from 'react-bootstrap/Form'
 import * as yup from 'yup'
 import { Formik } from 'formik';
 import Button from 'react-bootstrap/Button'
-import { ApiContext } from '../../context/Api/ApiContext'
 import OptionsList from '../OptionsList/OptionsList'
+import { ApiContext } from '../../context/Api/ApiContext'
+import { AlertContext } from '../../context/Alert/AlertContext'
+import { editTaskSuccessText, editTaskErrorText } from '../../constants'
+import { statusMessage } from '../../utils'
 // import useFetch from '../../useFetch'
 
 
 const FormEditData = ({ currentItem: { id, text, status }, setEditTask }) => {
   // const [openForm, setOpenForm] = useState(true)
-  const { token, editTask } = useContext(ApiContext)
+  const { token, editTask, status: mainStatus } = useContext(ApiContext)
+  const { show } = useContext(AlertContext)
 
   // const { createData } = useFetch()
 
@@ -24,8 +28,13 @@ const FormEditData = ({ currentItem: { id, text, status }, setEditTask }) => {
 
     // Sending data to the server DB
     editTask(formData, id)
+    // Clearing form fields
     isValidating.resetForm()
     setEditTask(false)
+    // Alert message
+    setTimeout(() => {
+      statusMessage(show, mainStatus, editTaskSuccessText, editTaskErrorText)
+    }, 500);
   }
 
   const onCloseHandler = () => {
@@ -84,7 +93,7 @@ const FormEditData = ({ currentItem: { id, text, status }, setEditTask }) => {
               <Form.Control as="select" custom name="status"
                 onChange={handleChange}
                 onBlur={handleBlur}>
-                <option className="text-danger" selected value='null'>select status</option>
+                <option className="text-danger" defaultValue="select status" value='null'>select status</option>
                 <OptionsList />
               </Form.Control>
               <Form.Control.Feedback type="valid">Looks good!</Form.Control.Feedback>

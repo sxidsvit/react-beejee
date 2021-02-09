@@ -3,7 +3,6 @@ import { AlertContext } from '../../context/Alert/AlertContext'
 
 const Alert = () => {
   const { alert, hide } = useContext(AlertContext)
-  console.log('Alert - alert: ', alert);
 
   if (!alert) return null
 

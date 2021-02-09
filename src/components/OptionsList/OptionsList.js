@@ -6,7 +6,7 @@ const OptionsList = () => {
   return (
     <React.Fragment>
       {statusArray.map(item =>
-        <option className="text-success" value={item.code}>{item.text}</option>)}
+        <option key={item.code} className="text-success" value={item.code}>{item.text}</option>)}
     </React.Fragment>
   )
 }

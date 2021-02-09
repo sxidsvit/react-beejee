@@ -6,7 +6,8 @@ import Button from 'react-bootstrap/Button'
 import { Col } from 'react-bootstrap'
 import { ApiContext } from '../../context/Api/ApiContext'
 import { AlertContext } from '../../context/Alert/AlertContext'
-import { admin, password, loginSuccessText } from '../../constants'
+import { admin, password, loginSuccessText, loginErrorText } from '../../constants'
+import { statusMessage } from '../../utils'
 
 const FormLogin = ({ setMode }) => {
 
@@ -25,9 +26,10 @@ const FormLogin = ({ setMode }) => {
     setMode('')
     // Clearing form fields
     isValidating.resetForm()
-    if (status === 'ok') {
-      show(`${loginSuccessText}`, 'success')
-    }
+    // Alert message
+    setTimeout(() => {
+      statusMessage(show, status, loginSuccessText, loginErrorText)
+    }, 500);
   }
 
   const onCloseHandler = () => {

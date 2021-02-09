@@ -5,7 +5,7 @@ import { getUrl, createUrl, loginUrl, editUrl, developer } from '../../constants
 import { ApiContext } from './ApiContext'
 
 export const ApiData = ({ children }) => {
-  const [status, setStatus] = useState('')
+  const [status, setStatus] = useState(null)
   const [totalTasks, setTotalTasks] = useState(0)
   const [tasks, setTasks] = useState([])
   const [token, setToken] = useState('')
@@ -16,6 +16,7 @@ export const ApiData = ({ children }) => {
     const url = params
       ? `${getUrl}&${params}`
       : `${getUrl}`
+    setStatus(null)
     try {
       let res = await fetch(url)
       const fetchedData = await res.json()
@@ -24,13 +25,14 @@ export const ApiData = ({ children }) => {
       setTotalTasks(total_task_count)
       setTasks(tasks)
     } catch (e) {
-      console.log(`${e.message}: cервер не возвращает нужные данные. Попробуйте позже ...`)
+      console.log(`${e.message}: server does not return the required data. Try later ...`)
     }
   }
 
   //  Create new task in server DB
   const createData = async (formData) => {
     const url = `${createUrl}`
+    setStatus(null)
     try {
       let res = await axios({
         url: url,
@@ -55,6 +57,7 @@ export const ApiData = ({ children }) => {
   //  Login as admin
   const loginAsAdmin = async (formData) => {
     const url = `${loginUrl}`
+    setStatus(null)
     try {
       let res = await axios({
         url: url,
@@ -80,6 +83,7 @@ export const ApiData = ({ children }) => {
   const editTask = async (formData, id) => {
 
     const url = `${editUrl}${id}?developer=${developer}`
+    setStatus(null)
     try {
       let res = await axios({
         url: url,
