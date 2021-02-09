@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext } from 'react'
 import Form from 'react-bootstrap/Form'
 import * as yup from 'yup'
@@ -32,8 +33,9 @@ const FormEditData = ({ currentItem: { id, text, status }, setEditTask }) => {
     isValidating.resetForm()
     setEditTask(false)
     // Alert message
-    setTimeout(() => {
+    setTimeout((mainStatus) => {
       statusMessage(show, mainStatus, editTaskSuccessText, editTaskErrorText)
+      console.log('mainStatus: ', mainStatus);
     }, 500);
   }
 
