@@ -3,23 +3,20 @@ import { AlertContext } from '../../context/Alert/AlertContext'
 
 const Alert = () => {
   const { alert, hide } = useContext(AlertContext)
+  console.log('Alert - alert: ', alert);
 
   if (!alert) return null
 
+  setTimeout(() => {
+    hide()
+  }, 3000);
+
   return (
     <div
-      className={`alert alert-${alert.type || 'secondary'} `}
+      className={`alert alert-${alert.type || 'secondary'} text-center`}
       role="alert" >
       {alert.text}
-      <button
-        type="button"
-        className="close"
-        aria-label="Close"
-        onClick={hide}
-      >
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div >
+    </div>
   )
 }
 

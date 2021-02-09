@@ -5,11 +5,13 @@ import { Formik } from 'formik';
 import Button from 'react-bootstrap/Button'
 import { Col } from 'react-bootstrap'
 import { ApiContext } from '../../context/Api/ApiContext'
-import { admin, password } from '../../constants'
+import { AlertContext } from '../../context/Alert/AlertContext'
+import { admin, password, loginSuccessText } from '../../constants'
 
 const FormLogin = ({ setMode }) => {
 
-  const { loginAsAdmin } = useContext(ApiContext)
+  const { loginAsAdmin, status } = useContext(ApiContext)
+  const { show } = useContext(AlertContext)
 
   const onAddDataHandler = (values, isValidating, errors, touched) => {
     isValidating.validateForm()
@@ -23,6 +25,9 @@ const FormLogin = ({ setMode }) => {
     setMode('')
     // Clearing form fields
     isValidating.resetForm()
+    if (status === 'ok') {
+      show(`${loginSuccessText}`, 'success')
+    }
   }
 
   const onCloseHandler = () => {
