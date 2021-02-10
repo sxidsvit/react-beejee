@@ -20,6 +20,12 @@ export const statusArray = [
   { code: Number(10), text: 'completed' },
   { code: Number(11), text: 'completed, edited' },
 ]
+export const statusArrayForUser = [
+  { code: Number(0), text: 'not completed' },
+  { code: Number(1), text: 'not completed' },
+  { code: Number(10), text: 'completed' },
+  { code: Number(11), text: 'completed' },
+]
 //  admin' login & password 
 export const admin = 'admin'
 export const password = 123

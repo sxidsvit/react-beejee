@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import ReactPaginate from 'react-paginate'
 import Table from 'react-bootstrap/Table'
 import SortArrow from '../SortArrow/SortArrow'
-import { keyGen, getTextFromCode } from '../../utils'
+import { keyGen, getTextFromCode, getTextFromCodeForUser } from '../../utils'
 import { ApiContext } from '../../context/Api/ApiContext'
 
 const MainTable = ({
@@ -14,10 +14,11 @@ const MainTable = ({
   onEditSelect
 }) => {
 
-  //  get amin token
-  const { fetchData, tasks: data, token, totalTasks } = useContext(ApiContext)
+  const { fetchData, tasks: data, totalTasks } = useContext(ApiContext)
 
-  console.log('MainTable - data: ', data);
+  // Get admin' token from localStorage
+  const token = localStorage.getItem('token')
+
   //  Data checking to render
   if (!data?.[0]) { return <></> }
 
@@ -60,7 +61,10 @@ const MainTable = ({
               data.map((item, index) => (
                 <tr key={index + keyGen} onClick={onEditSelect.bind(null, item)}>
                   {fields.map(field => (<td key={field} >
-                    { field === 'status' ? getTextFromCode(item[field]) : item[field]}
+                    {token
+                      ? (field === 'status') ? getTextFromCode(item[field]) : item[field]
+                      : (field === 'status') ? getTextFromCodeForUser(item[field]) : item[field]
+                    }
                   </td>)
                   )}
                   {token ? <td>

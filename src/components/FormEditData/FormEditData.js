@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useContext } from 'react'
 import Form from 'react-bootstrap/Form'
 import * as yup from 'yup'
@@ -8,15 +9,14 @@ import { ApiContext } from '../../context/Api/ApiContext'
 import { AlertContext } from '../../context/Alert/AlertContext'
 import { editTaskSuccessText, editTaskErrorText } from '../../constants'
 import { statusMessage } from '../../utils'
-// import useFetch from '../../useFetch'
 
 
-const FormEditData = ({ currentItem: { id, text, status }, setEditTask }) => {
-  // const [openForm, setOpenForm] = useState(true)
-  const { token, editTask, status: mainStatus } = useContext(ApiContext)
+const FormEditData = ({ currentItem: { id, text }, setEditTask }) => {
+  const { editTask, status } = useContext(ApiContext)
   const { show } = useContext(AlertContext)
 
-  // const { createData } = useFetch()
+  // Get admin' token from localStorage
+  const token = localStorage.getItem('token')
 
   const onAddDataHandler = (values, isValidating, errors, touched) => {
     isValidating.validateForm()
@@ -33,13 +33,11 @@ const FormEditData = ({ currentItem: { id, text, status }, setEditTask }) => {
     setEditTask(false)
     // Alert message
     setTimeout(() => {
-      statusMessage(show, mainStatus, editTaskSuccessText, editTaskErrorText)
+      statusMessage(show, status, editTaskSuccessText, editTaskErrorText)
     }, 500);
   }
 
   const onCloseHandler = () => {
-    // setMode('')
-    // setOpenForm(false)
     setEditTask(false)
   }
 
