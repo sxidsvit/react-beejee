@@ -86,7 +86,6 @@ export const ApiData = ({ children }) => {
 
   //  Edit task
   const editTask = async (formData, id) => {
-
     const url = `${editUrl}${id}?developer=${developer}`
     setStatus(null)
     try {

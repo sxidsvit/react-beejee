@@ -44,8 +44,6 @@ function App() {
 
   // Task selecting for editing
   const onEditSelectHandler = (item) => {
-    console.log('item: ', item);
-    console.log('token: ', token);
     setEditTask(false)
     setTimeout(() => {
       setEditTask(true)

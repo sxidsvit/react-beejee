@@ -11,13 +11,12 @@ import { editTaskSuccessText, editTaskErrorText } from '../../constants'
 import { statusMessage } from '../../utils'
 
 
-const FormEditData = ({ currentItem: { id, text, status }, setEditTask }) => {
-  const { editTask, status: mainStatus } = useContext(ApiContext)
+const FormEditData = ({ currentItem: { id, text }, setEditTask }) => {
+  const { editTask, status } = useContext(ApiContext)
   const { show } = useContext(AlertContext)
 
   // Get admin' token from localStorage
   const token = localStorage.getItem('token')
-  console.log('FormEditData - token: ', token)
 
   const onAddDataHandler = (values, isValidating, errors, touched) => {
     isValidating.validateForm()
@@ -33,9 +32,8 @@ const FormEditData = ({ currentItem: { id, text, status }, setEditTask }) => {
     isValidating.resetForm()
     setEditTask(false)
     // Alert message
-    setTimeout((mainStatus) => {
-      statusMessage(show, mainStatus, editTaskSuccessText, editTaskErrorText)
-      console.log('mainStatus: ', mainStatus);
+    setTimeout(() => {
+      statusMessage(show, status, editTaskSuccessText, editTaskErrorText)
     }, 500);
   }
 
