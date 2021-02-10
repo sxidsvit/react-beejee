@@ -23,7 +23,7 @@ const FormLogin = ({ setMode }) => {
     // Sending data to the server DB
     loginAsAdmin(formData)
     // Close login form
-    setMode('')
+    setMode('adminLogout')
     // Clearing form fields
     isValidating.resetForm()
     // Alert message
