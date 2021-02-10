@@ -26,7 +26,6 @@ function App() {
     setLoading(true)
     fetchData()
     setLoading(false)
-    return () => localStorage.removeItem('token')
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
