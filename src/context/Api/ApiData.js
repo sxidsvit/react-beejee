@@ -45,7 +45,6 @@ export const ApiData = ({ children }) => {
         method: 'post',
         data: formData,
         headers: {
-          // 'Cache-Control': 'no-cache',
           'Content-Type': 'multipart/form-data',
           'Accept': '*/*'
         },
@@ -70,7 +69,6 @@ export const ApiData = ({ children }) => {
         method: 'post',
         data: formData,
         headers: {
-          // 'Cache-Control': 'no-cache',
           'Content-Type': 'multipart/form-data',
           'Accept': '*/*'
         },
@@ -78,7 +76,6 @@ export const ApiData = ({ children }) => {
       })
       const fetchedData = await res.data
       const { status, message: { token: serverToken } } = fetchedData
-      // setStatus(status)
       localStorage.setItem('token', serverToken)
       setToken(serverToken)
       return status
@@ -97,7 +94,6 @@ export const ApiData = ({ children }) => {
         method: 'post',
         data: formData,
         headers: {
-          // 'Cache-Control': 'no-cache',
           'Content-Type': 'multipart/form-data',
           'Accept': '*/*'
         },
@@ -117,7 +113,6 @@ export const ApiData = ({ children }) => {
     <ApiContext.Provider value={{
       fetchData, createData, loginAsAdmin, editTask,
       status, totalTasks, tasks, token, setToken, message
-      // status, totalTasks, tasks, message
     }}>
       { children}
     </ApiContext.Provider>

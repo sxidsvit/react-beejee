@@ -27,9 +27,9 @@
 
 ### Как это работает
 
-### [Site](https://asp-beejee.web.app/ 'Right click to open site in separate window')
+![Картинка](https://github.com/sxidsvit/react-beejee/tree/main/supplement/demo.gif)
 
-### [Codesandbox.io with site](https://codesandbox.io/s/musing-kapitsa-g7hsu 'Right click to open site in separate window')
+### [Site](https://asp-beejee.web.app/ 'Right click to open site in separate window')
 
 ### Запуск сервера и приложения одной коммандой
 
