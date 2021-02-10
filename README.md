@@ -27,7 +27,7 @@
 
 ### Как это работает
 
-### [Site](https://mibw9.csb.app/ 'Right click to open site in separate window')
+### [Site](https://asp-beejee.web.app/ 'Right click to open site in separate window')
 
 ### [Codesandbox.io with site](https://codesandbox.io/s/musing-kapitsa-g7hsu 'Right click to open site in separate window')
 
