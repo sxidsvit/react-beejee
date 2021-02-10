@@ -45,7 +45,7 @@ export const ApiData = ({ children }) => {
         method: 'post',
         data: formData,
         headers: {
-          'Cache-Control': 'no-cache',
+          // 'Cache-Control': 'no-cache',
           'Content-Type': 'multipart/form-data',
           'Accept': '*/*'
         },
@@ -70,7 +70,7 @@ export const ApiData = ({ children }) => {
         method: 'post',
         data: formData,
         headers: {
-          'Cache-Control': 'no-cache',
+          // 'Cache-Control': 'no-cache',
           'Content-Type': 'multipart/form-data',
           'Accept': '*/*'
         },
@@ -97,7 +97,7 @@ export const ApiData = ({ children }) => {
         method: 'post',
         data: formData,
         headers: {
-          'Cache-Control': 'no-cache',
+          // 'Cache-Control': 'no-cache',
           'Content-Type': 'multipart/form-data',
           'Accept': '*/*'
         },

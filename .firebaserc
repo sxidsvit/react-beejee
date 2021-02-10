@@ -2,7 +2,7 @@
   "projects": {
     "default": "asp-ads"
   },
-  "tarhets":{
+  "targets":{
     "asp-ads": {
       "hosting": {
         "asp-beejee": [
