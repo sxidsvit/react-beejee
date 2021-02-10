@@ -1,5 +1,5 @@
 /* eslint-disable space-before-function-paren */
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 import { getUrl, createUrl, loginUrl, editUrl, developer } from '../../constants.js'
 import { ApiContext } from './ApiContext'
@@ -11,8 +11,10 @@ export const ApiData = ({ children }) => {
   const [message, setMessage] = useState('')
   const [token, setToken] = useState(null)
 
-  // Remove the old token when initialize application
-  // localStorage.removeItem('token')
+  // Get token saved in previous session from localStorage
+  useEffect(() => {
+    if (localStorage.getItem('token')) setToken(localStorage.getItem('token'))
+  }, [setToken])
 
   //  Fetch data from server DB
   const fetchData = async (params = '') => {
