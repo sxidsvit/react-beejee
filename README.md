@@ -41,4 +41,5 @@ npm run start
 ```
 
 Для POST-запросов к API приложение должно быть установлено на https-скрвере.
+
 При работе с локальной машины (localhost) можно использовать [cors-proxy](https://cors-anywhere.herokuapp.com/corsdemo) или любой аналогичный.
