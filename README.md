@@ -1,6 +1,6 @@
 ## BeeJee - приложение-задачник
 
-### Тестовое задание от компании [BeeJe](https://beejee.ru/) на позицию React frontend developer:
+### Тестовое задание от компании [BeeJee](https://beejee.ru/) на позицию React frontend developer:
 
 - [описание задания](https://github.com/sxidsvit/react-beejee/tree/main/supplement/task.md)
 - [требования к коду](https://github.com/sxidsvit/react-beejee/tree/main/supplement/codedemands.md)

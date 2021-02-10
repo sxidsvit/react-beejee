@@ -36,9 +36,17 @@ export const dataPerPage = 3
 //  url for testing errors
 export const baseUrlWrong = 'https://uxcandy11.com/~shapoval/test-task-backend/v2/'
 
-//  urls
+//  base url
 export const baseUrl = 'https://uxcandy.com/~shapoval/test-task-backend/v2/'
+
+// urls for deploing
 export const getUrl = `${baseUrl}?developer=${developer}`
-export const createUrl = `${cors}${baseUrl}create?developer=${developer}`
-export const loginUrl = `${cors}${baseUrl}login?developer=${developer}`
-export const editUrl = `${cors}${baseUrl}edit/`
+export const createUrl = `${baseUrl}create?developer=${developer}`
+export const loginUrl = `${baseUrl}login?developer=${developer}`
+export const editUrl = `${baseUrl}edit/`
+
+// urls for debuging
+// export const getUrl = `${baseUrl}?developer=${developer}`
+// export const createUrl = `${cors}${baseUrl}create?developer=${developer}`
+// export const loginUrl = `${cors}${baseUrl}login?developer=${developer}`
+// export const editUrl = `${cors}${baseUrl}edit/`

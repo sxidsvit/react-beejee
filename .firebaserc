@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "asp-ads"
+  },
+  "tarhets":{
+    "asp-ads": {
+      "hosting": {
+        "asp-beejee": [
+          "asp-beejee"
+        ]
+      }
+    }
+  }
+}
