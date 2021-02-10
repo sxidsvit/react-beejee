@@ -12,7 +12,7 @@ import { statusMessage } from '../../utils'
 const TableNewData = ({ setMode }) => {
 
   const [openForm, setOpenForm] = useState(true)
-  const { createData, status } = useContext(ApiContext)
+  const { createData } = useContext(ApiContext)
   const { show } = useContext(AlertContext)
 
   const onAddDataHandler = (values, isValidating, errors, touched) => {
@@ -22,16 +22,15 @@ const TableNewData = ({ setMode }) => {
     formData.append("username", values.username)
     formData.append("email", values.email)
     formData.append("text", values.text)
-    // Sending data to the server DB
-    createData(formData)
+    // Sending data to the server DB & send alert message
+    Promise.resolve(createData(formData))
+      .then(status => {
+        statusMessage(show, status, newTaskSuccessText, newTaskErrorText)
+      })
     //  Hide the form
     setMode('')
     // Clearing form fields
     isValidating.resetForm()
-    // Alert message
-    setTimeout(() => {
-      statusMessage(show, status, newTaskSuccessText, newTaskErrorText)
-    }, 500);
   }
 
   const onCloseHandler = () => {

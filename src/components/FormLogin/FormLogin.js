@@ -11,7 +11,7 @@ import { statusMessage } from '../../utils'
 
 const FormLogin = ({ setMode }) => {
 
-  const { loginAsAdmin, status } = useContext(ApiContext)
+  const { loginAsAdmin } = useContext(ApiContext)
   const { show } = useContext(AlertContext)
 
   const onAddDataHandler = (values, isValidating, errors, touched) => {
@@ -20,16 +20,13 @@ const FormLogin = ({ setMode }) => {
     const formData = new FormData()
     formData.append("username", values.username)
     formData.append("password", values.password)
-    // Sending data to the server DB
-    loginAsAdmin(formData)
+    // loginAsAdmin(formData) & send alert message
+    Promise.resolve(loginAsAdmin(formData))
+      .then(status => statusMessage(show, status, loginSuccessText, loginErrorText))
     // Close login form
     setMode('adminLogout')
     // Clearing form fields
     isValidating.resetForm()
-    // Alert message
-    setTimeout(() => {
-      statusMessage(show, status, loginSuccessText, loginErrorText)
-    }, 500);
   }
 
   const onCloseHandler = () => {

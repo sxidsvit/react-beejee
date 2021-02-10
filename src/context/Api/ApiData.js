@@ -29,6 +29,7 @@ export const ApiData = ({ children }) => {
       setStatus(status)
       setTotalTasks(total_task_count)
       setTasks(tasks)
+      return status
     } catch (e) {
       console.log(`${e.message}: server does not return the required data. Try later ...`)
     }
@@ -53,6 +54,7 @@ export const ApiData = ({ children }) => {
       const fetchedData = await res.data
       const { status } = fetchedData
       setStatus(status)
+      return status
     } catch (e) {
       console.log(`${e.message}`)
     }
@@ -76,9 +78,10 @@ export const ApiData = ({ children }) => {
       })
       const fetchedData = await res.data
       const { status, message: { token: serverToken } } = fetchedData
-      setStatus(status)
+      // setStatus(status)
       localStorage.setItem('token', serverToken)
       setToken(serverToken)
+      return status
     } catch (e) {
       console.log(`${e.message}`)
     }
@@ -104,6 +107,7 @@ export const ApiData = ({ children }) => {
       const { status, message = '' } = fetchedData
       setStatus(status)
       setMessage(message)
+      return status
     } catch (e) {
       console.log(`${e.message}`)
     }

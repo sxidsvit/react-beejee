@@ -12,7 +12,7 @@ import { statusMessage } from '../../utils'
 
 
 const FormEditData = ({ currentItem: { id, text }, setEditTask }) => {
-  const { editTask, status } = useContext(ApiContext)
+  const { editTask } = useContext(ApiContext)
   const { show } = useContext(AlertContext)
 
   // Get admin' token from localStorage
@@ -26,15 +26,14 @@ const FormEditData = ({ currentItem: { id, text }, setEditTask }) => {
     formData.append("status", Number(values.status))
     formData.append("token", token)
 
-    // Sending data to the server DB
-    editTask(formData, id)
+    // Sending data to the server DB & send alert message
+    Promise.resolve(editTask(formData, id))
+      .then(status => {
+        statusMessage(show, status, editTaskSuccessText, editTaskErrorText)
+      })
     // Clearing form fields
     isValidating.resetForm()
     setEditTask(false)
-    // Alert message
-    setTimeout(() => {
-      statusMessage(show, status, editTaskSuccessText, editTaskErrorText)
-    }, 500);
   }
 
   const onCloseHandler = () => {
